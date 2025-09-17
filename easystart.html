@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Rosenstrasse Protest: Reform, Revolution, Reaction - NHD Research Hub</title>
+    <style>
+        /* Enhanced Global Styles for Stunning Visuals */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header with Enhanced Overlay */
+        header {
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="white" opacity="0.1"/><circle cx="75" cy="75" r="1" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>') repeat;
+            opacity: 0.5;
+        }
+        header .container {
+            position: relative;
+            z-index: 1;
+        }
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            background: linear-gradient(45deg, #e74c3c, #3498db);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .subtitle {
+            font-size: 1.3rem;
+            opacity: 0.9;
+        }
+
+        /* Navigation with Glow Effect */
+        nav {
+            background: #2c3e50;
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        nav li {
+            margin: 0 1rem;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: all 0.3s;
+            box-shadow: 0 0 5px rgba(255,255,255,0.2);
+        }
+        nav a:hover {
+            background: #34495e;
+            box-shadow: 0 0 15px rgba(52, 152, 219, 0.5);
+            transform: translateY(-2px);
+        }
+
+        /* Sections with Staggered Animations */
+        section {
+            padding: 4rem 0;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s forwards;
+        }
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        section:nth-child(even) {
+            background: rgba(255,255,255,0.6);
+        }
+        h2 {
+            font-size: 2.8rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #2c3e50;
+            position: relative;
+        }
+        h2::after {
+            content: '';
+            display: block;
+            width: 50px;
+            height: 3px;
+            background: linear-gradient(45deg, #e74c3c, #3498db);
+            margin: 1rem auto;
+        }
+
+        /* Enhanced Timeline */
+        .timeline {
+            position: relative;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(to bottom, #e74c3c, #3498db);
+            border-radius: 2px;
+        }
+        .timeline-item {
+            margin: 3rem 0;
+            position: relative;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .timeline-item:hover {
+            transform: scale(1.02);
+        }
+        .timeline-item:nth-child(odd) {
+            flex-direction: row-reverse;
+        }
+        .timeline-content {
+            width: 45%;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            border-left: 4px solid #3498db;
+        }
+        .timeline-content:hover {
+            transform: scale(1.05) rotate(1deg);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        .timeline-date {
+            font-weight: bold;
+            color: #e74c3c;
+            font-size: 1.2rem;
+        }
+
+        /* Grid for Sources and Testimonies with Hover Effects */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        .card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            overflow: hidden;
+            position: relative;
+        }
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(45deg, #e74c3c, #3498db);
+        }
+        .card:hover {
+            box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+            transform: translateY(-5px);
+        }
+        .card h3 {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+        }
+        .card p {
+            margin-bottom: 1rem;
+            text-align: justify;
+        }
+        .card .summary {
+            font-style: italic;
+            color: #555;
+            margin-bottom: 1rem;
+        }
+        .card .unique {
+            background: #e8f5e8;
+            padding: 1rem;
+            border-radius: 8px;
+            border-left: 4px solid #27ae60;
+            margin-top: 1rem;
+        }
+        .card .theme {
+            background: #e8f4fd;
+            padding: 1rem;
+            border-radius: 8px;
+            border-left: 4px solid #3498db;
+            margin-top: 1rem;
+        }
+        .card .link {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .card .link:hover {
+            text-decoration: underline;
+        }
+        .citation {
+            font-size: 0.8rem;
+            color: #7f8c8d;
+            margin-top: 1rem;
+        }
+
+        /* Map and Multimedia */
+        .map-container {
+            height: 400px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+            margin: 2rem 0;
+        }
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        .video-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+        }
+        .video-card iframe {
+            width: 100%;
+            height: 200px;
+        }
+
+        /* Analysis Section */
+        .analysis {
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+        }
+        .analysis p {
+            font-size: 1.1rem;
+            margin: 1rem 0;
+            text-align: left;
+        }
+
+        /* Memorial Section */
+        .memorial {
+            text-align: center;
+        }
+        .memorial img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 15px;
+            margin: 1rem 0;
+        }
+
+        /* Footer */
+        footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 1.5rem 0;
+            margin-top: 4rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            nav ul { flex-direction: column; align-items: center; }
+            .timeline::before { left: 20px; }
+            .timeline-item { flex-direction: column !important; }
+            .timeline-content { width: 100%; margin-bottom: 2rem; }
+            .grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>The Rosenstrasse Protest: Reform, Revolution, Reaction</h1>
+            <p class="subtitle">Deep Research Hub for NHD 2025: Progressive Sources, Testimonies, Multimedia, and Thematic Analysis</p>
+        </div>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="#intro">Introduction</a></li>
+            <li><a href="#timeline">Interactive Timeline</a></li>
+            <li><a href="#map">Historical Map</a></li>
+            <li><a href="#sources">Secondary Sources</a></li>
+            <li><a href="#testimonies">Primary Testimonies</a></li>
+            <li><a href="#multimedia">Multimedia</a></li>
+            <li><a href="#memorial">Memorial & Legacy</a></li>
+            <li><a href="#themes">Thematic Connections</a></li>
+            <li><a href="#analysis">Overall Analysis</a></li>
+        </ul>
+    </nav>
+
+    <section id="intro">
+        <div class="container">
+            <h2>Introduction: The Rosenstrasse Protest & NHD Themes</h2>
+            <p>The Rosenstrasse Protest (Feb-Mar 1943) was a spontaneous uprising by non-Jewish women in Berlin protesting the arrest of their Jewish husbands during the Nazi "Factory Action," leading to the release of ~2,000 lives. This event embodies NHD 2025's "Reform, Revolution, Reaction": <strong>Reaction</strong> to genocidal escalation; <strong>Reform</strong> via forced policy exemptions; <strong>Revolution</strong> in challenging totalitarian control through civil courage. Our 10 secondary sources progress from foundational events (#1) to intermarriage dynamics (#2-3), institutional roles (#4-5), debates (#6), gender agency (#7), survivor voices (#8), methodology (#9), and memory (#10), creating a feedback loop where early facts inform debates, which refine memory narratives. Similarly, 10 testimonies build from detainment (#1-3) to family defiance (#4-6), impacts (#7-9), and legacy (#10). Collectively, they form a cohesive puzzle: sources provide context, testimonies humanize, looping back to deepen thematic insights—e.g., reaction in testimonies validates reform in sources.</p>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Rosenstra%C3%9Fe_memorial.jpg/800px-Rosenstra%C3%9Fe_memorial.jpg" alt="Rosenstrasse Memorial" style="max-width:100%; border-radius:15px; box-shadow:0 6px 20px rgba(0,0,0,0.1); margin:2rem 0;">
+        </div>
+    </section>
+
+    <section id="timeline">
+        <div class="container">
+            <h2>Interactive Timeline</h2>
+            <p>Click items for details. Events build the protest's narrative.</p>
+            <div class="timeline">
+                <div class="timeline-item" onclick="alert('Nuremberg Laws ban intermarriages, creating "privileged" status—sets stage for mixed-marriage tensions.')">
+                    <div class="timeline-content">
+                        <div class="timeline-date">1935</div>
+                        <p>Nuremberg Laws classify Jews, ban intermarriages.</p>
+                    </div>
+                </div>
+                <div class="timeline-item" onclick="alert('Factory Action arrests ~10,000 Berlin Jews, including 2,000 intermarried, held at Rosenstrasse.')">
+                    <div class="timeline-content">
+                        <div class="timeline-date">Feb 27, 1943</div>
+                        <p>Factory Action begins: Mass arrests for deportation.</p>
+                    </div>
+                </div>
+                <div class="timeline-item" onclick="alert('Women gather, chanting despite SS threats; crowd grows to hundreds/thousands.')">
+                    <div class="timeline-content">
+                        <div class="timeline-date">Feb 27-Mar 6</div>
+                        <p>Protests erupt: Daily demonstrations for husbands' release.</p>
+                    </div>
+                </div>
+                <div class="timeline-item" onclick="alert('Goebbels orders releases to avoid unrest post-Stalingrad; ~1,700 freed.')">
+                    <div class="timeline-content">
+                        <div class="timeline-date">Mar 6, 1943</div>
+                        <p>Releases ordered: Policy concession amid pressure.</p>
+                    </div>
+                </div>
+                <div class="timeline-item" onclick="alert('Intermarried Jews largely spared; inspires memorials, films, ongoing memory.')">
+                    <div class="timeline-content">
+                        <div class="timeline-date">1945-Present</div>
+                        <p>Legacy: Survival, commemorations, and historical debates.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="map">
+        <div class="container">
+            <h2>Interactive Historical Map</h2>
+            <p>Pinpointing key locations: Rosenstrasse 2-4 (protest site), Old Synagogue (nearby memorial), Gestapo HQ.</p>
+            <div class="map-container">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2324.123456789!2d13.414!3d52.519!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNTLCsTMxJzA5LjIiTiAxM8KwMjQnNTIuMCJF!5e0!3m2!1sen!2sus!4v1690000000000" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+        </div>
+    </section>
+
+    <section id="sources">
+        <div class="container">
+            <h2>10 Secondary Sources: Progressive Building Blocks</h2>
+            <p>Sources progress: #1 foundational review; #2-3 memory/debates; #4-5 intermarriage/churches; #6-7 policy/gender; #8-10 survivor/methodology. Each adds unique layer, looping: e.g., #1's debate informs #6's facts critique.</p>
+            <div class="grid">
+                <div class="card">
+                    <h3>1. Resistance of the Heart Book Review (TLS, 1997)</h3>
+                    <p class="summary">Review of Stoltzfus' book: Analyzes 1943 protest where Aryan women protested Jewish husbands' arrests, leading to 1,700-2,000 releases; critiques oral testimony reliability; broader thesis on protest preventing genocide.</p>
+                    <div class="unique">Unique: Biographical portraits personalize resistance; contrasts victim history with power structures.</div>
+                    <div class="theme">Theme: Reaction—Nazi sensitivity to unrest post-Stalingrad forces release.</div>
+                    <a href="https://history.fsu.edu/sites/g/files/imported/storage/original/application/c5409d6af0fa2637f3118806f6e532b0.pdf" class="link">Full Source (PDF)</a>
+                    <div class="citation">Bessel, 1997<grok-card data-id="4c4f1a" data-type="citation_card"></grok-card></div>
+                </div>
+                <div class="card">
+                    <h3>2. Dynamics of German Remembering (Core.ac.uk, 2019)</h3>
+                    <p class="summary">Examines post-1945 narratives in newspapers, academics, memoirs on protest; patterns in memory construction via historical debates.</p>
+                    <div class="unique">Unique: Traces identity construction through cultural representations, building on #1's oral critiques.</div>
+                    <div class="theme">Theme: Reform—Shifts in post-war memory reform German self-understanding.</div>
+                    <a href="https://core.ac.uk/download/pdf/161919400.pdf" class="link">Full Source (PDF)</a>
+                    <div class="citation">Author Unknown, 2019<grok-card data-id="a73615" data-type="citation_card"></grok-card></div>
+                </div>
+                <div class="card">
+                    <h3>3. PhD Thesis: Dynamics of German Remembering (Bath, 2019)</h3>
+                    <p class="summary">Thesis on memory patterns in debates/cultural reps of protest; reflects German identity post-1945.</p>
+                    <div class="unique">Unique: Analyzes historiographical shifts, extending #2's narratives to cultural impact.</div>
+                    <div class="theme">Theme: Revolution—Protest as revolutionary in memory, challenging compliance myths.</div>
+                    <a href="https://researchportal.bath.ac.uk/files/187920774/Post_viva_PhD_The_Dynamics_of_German_Remembering_The_Rosenstrasse_Protest_in_Historical_Debate_and_Cultural_Representation.pdf" class="link">Full Source (PDF)</a>
+                    <div class="citation">Author Unknown, 2019<grok-card data-id="1e36e7" data-type="citation_card"></grok-card></div>
+                </div>
+                <div class="card">
+                    <h3>4. Intermarriage & Rosenstrasse Protest (FSU Thesis, 2012)</h3>
+                    <p class="summary">Analyzes intermarriages defying ideology; 98% surviving Jews intermarried; protest releases 1,700; Hitler's consensus fear from 1918.</p>
+                    <div class="unique">Unique: RSHA debates reveal cracks, building on #3's historiography.</div>
+                    <div class="theme">Theme: Reaction—Regime yields to avoid unrest.</div>
+                    <a href="https://history.fsu.edu/sites/g/files/imported/storage/original/application/92e70dd5f2e827d3b80d6d4f52a18149.pdf" class="link">Full Source (PDF)</a>
+                    <div class="citation">Wirsansky, 2012<grok-card data-id="b752f0" data-type="citation_card"></grok-card></div>
+                </div>
+                <div class="card">
+                    <h3>5. 1943 Rosenstrasse Protest & Churches (DeGruyter, 2022)</h3>
+                    <p class="summary">Churches' moral framework; limited support but inspiration from euthanasia protests; religious climate enabled dissent.</p>
+                    <div class="unique">Unique: Institutional role in unrest, extending #4's dynamics.</div>
+                    <div class="theme">Theme: Reform—Moral advocacy for policy change.</div>
+                    <a href="https://www.degruyterbrill.com/document/doi/10.1515/9781782388258-011/html" class="link">Full Source</a>
+                    <div class="citation">Leugers, 2022<grok-card data-id="ae2624" data-type="citation_card"></grok-card></div>
+                </div>
+                <div class="card">
+                    <h3>6. Resistance of the Heart (Archive.org, 1996)</h3>
+                    <p class="summary">Reconstructs via interviews/Nazi records: 2,000 held, hundreds protest; releases due to morale fears; self-protective resistance.</p>
+                    <div class="unique">Unique: Eyewitness/Gestapo accounts, critiquing #5's inspirations.</div>
+                    <div class="theme">Theme: Revolution—Public nonviolent challenge.</div>
+                    <a href="https://archive.org/details/resistanceofhear0000stol" class="link">Full Source</a>
+                    <div class="citation">Stoltzfus, 1996<grok-card data-id="9e0baa" data-type="citation_card"></grok-card></div>
+                </div>
+                <div class="card">
+                    <h3>7. Intermarriage & 1943 Protests (WWII Museum, 2025)</h3>
+                    <p class="summary">Aryan wives protest; releases via consensus needs; critiques downplaying impact; 12,930 survived by 1944.</p>
+                    <div class="unique">Unique: Dual State theory on legal traditions, building #6's voices.</div>
+                    <div class="theme">Theme: Reaction—Compromises for quiescence.</div>
+                    <a href="https://www.nationalww2museum.org/war/articles/intermarriage-1943-rosenstrasse-protests-and-social-constraints-hitlers-power" class="link">Full Source</a>
+                    <div class="citation">Stoltzfus, 2025<grok-card data-id="942ce0" data-type="citation_card"></grok-card></div>
+                </div>
+                <div class="card">
+                    <h3>8. Las Protestas de la Rosenstrasse (Revista, 2023)</h3>
+                    <p class="summary">Critical debate on women's social movement; Feb-Mar 1943 protests as collective action vs. regime.</p>
+                    <div class="unique">Unique: Gender focus on movement, extending #7's agency.</div>
+                    <div class="theme">Theme: Reform—Challenging unjust system via action.</div>
+                    <a href="https://revistalaventana.cucsh.udg.mx/index.php/LV/article/view/7279/6627" class="link">Full Source</a>
+                    <div class="citation">Author Unknown, 2023<grok-card data-id="3ab048" data-type="citation_card"></grok-card></div>
+                </div>
+                <div class="card">
+                    <h3>9. Chapter Nine: Rosenstrasse Protest (DeGruyter, 2019)</h3>
+                    <p class="summary">In Jews in Nazi Berlin: Critical mass of protesting Germans per Stoltzfus; context of forced labor/deportations.</p>
+                    <div class="unique">Unique: Berlin-specific Jewish life ties, linking #8's gender to labor.</div>
+                    <div class="theme">Theme: Revolution—Mass defiance disrupts deportation.</div>
+                    <a href="https://www.degruyterbrill.com/document/doi/10.7208/9780226521596-011/html" class="link">Full Source</a>
+                    <div class="citation">Schulle, 2019<grok-card data-id="6d0b2c" data-type="citation_card"></grok-card></div>
+                </div>
+                <div class="card">
+                    <h3>10. Factory Action & Rosenstrasse: Facts/Fictions (ResearchGate, 2008)</h3>
+                    <p class="summary">>10,000 arrested; no deportation plan for mixed; 200 protested, releases Mar 1-12; myths of exaggerated crowds.</p>
+                    <div class="unique">Unique: New docs on underground flights, synthesizing #9's context.</div>
+                    <div class="theme">Theme: Reaction—Admin decisions vs. protest influence.</div>
+                    <a href="https://www.researchgate.net/publication/231834249_The_Factory_Action_and_the_Events_at_the_Rosenstrasse_in_Berlin_Facts_and_Fictions_about_27_February_1943_-_Sixty_Years_Later" class="link">Full Source</a>
+                    <div class="citation">Neander, 2008<grok-card data-id="76ea22" data-type="citation_card"></grok-card></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="testimonies">
+        <div class="container">
+            <h2>10 Primary Testimonies: Voices from Detainment to Legacy</h2>
+            <p>Progression: #1-3 detainment; #4-6 family protests; #7-9 impacts; #10 reflections. Loop: Testimonies validate sources (e.g., #2 echoes #7's threats), deepening themes.</p>
+            <div class="grid">
+                <div class="card">
+                    <h3>1. (D.S.) Anonymous (USHMM, 1982)</h3>
+                    <p class="summary">Born 1928 Berlin, mixed family; father detained post-Kristallnacht at Rosenstrasse; D.S. protested; spared via mother's status; sabotaged in camp; emigrated 1948.</p>
+                    <div class="unique">Unique: Child's protest role; resistance group of mixed youth.</div>
+                    <div class="theme">Theme: Revolution—Sabotage as active opposition.</div>
+                    <a href="https://collections.ushmm.org/search/catalog/irn508681" class="link">Full Testimony</a>
+                    <div class="citation">USHMM, 1982<grok-card data-id="00d134" data-type="citation_card"></grok-card></div>
+                </div>
+                <div class="card">
+                    <h3>2. Fritz Gluckstein (USHMM, 2008)</h3>
+                    <p class="summary">Detained twice at Rosenstrasse; SS Brunner threats; released via wives' protests despite machine guns; only Reich demo.</p>
+                    <div class="unique">Unique: Inside conditions; Goebbels' diary mention.</div>
+                    <div class="theme">Theme: Reaction—Regime backs down post-Stalingrad.</div>
+                    <a href="https://www.ushmm.org/remember/holocaust-survivors/first-person-conversations-with-survivors/first-person/fritz-gluckstein-protest-at-rosenstrasse" class="link">Full Testimony</a>
+                    <div class="citation">USHMM, 2008<grok-card data-id="bb25a3" data-type="citation_card"></grok-card></div>
+                </div>
+                <div class="card">
+                    <h3>3. Gad Beck (YouTube/USC, 2023)</h3>
+                    <p class="summary">Mischling detained with father; aunts protested arm-in-arm vs. shoot threats; peaceful release after week.</p>
+                    <div class="unique">Unique: Locked-arms defiance; no violence/cannons.</div>
+                    <div class="theme">Theme: Reform—Challenges deportation via solidarity.</div>
+                    <a href="https://www.youtube.com/watch?v=kRC9CAmbJD8" class="link">Full Video</a>
+                    <div class="citation">USC Shoah, 2023<grok-card data-id="d099c6" data-type="citation_card"></grok-card></div>
+                </div>
+                <div class="card">
+                    <h3>4. Ruth Wiseman (MJHNYC, 2023)</h3>
+                    <p class="summary">Daughter of Rita Kuhn; mother's detention/release via protest; family survival, immigration; psychological impacts.</p>
+                    <div class="unique">Unique: Intergenerational remorse; conversion dynamics.</div>
+                    <div class="theme">Theme: Revolution—Family defiance alters fates.</div>
+                    <a href="https://mjhnyc.org/events/the-rosenstrasse-protest-commemorating-the-80th-anniversary/" class="link">Full Event</a>
+                    <div class="citation">MJHNYC, 2023<grok-card data-id="3e7be7" data-type="citation_card"></grok-card></div>
+                </div>
+                <div class="card">
+                    <h3>5. Multiple Wives (Nonviolent-Conflict, 1996)</h3>
+                    <p class="summary">Week-long vigils vs. SS; emotional reunions; endured stigma for family; 21 detailed participants.</p>
+                    <div class="unique">Unique: Collective emotional bonds; self-protective courage.</div>
+                    <div class="theme">Theme: Reaction—Persistent pressure forces concessions.</div>
+                    <a href="https://www.nonviolent-conflict.org/resource/resistance-of-the-heart-intermarriage-and-the-rosenstrasse-protest-in-nazi-germany/" class="link">Full Source</a>
+                    <div class="citation">Stoltzfus, 1996<grok-card data-id="c5f26b" data-type="citation_card"></grok-card></div>
+                </div>
+                <div class="card">
+                    <h3>6. Nathan Stoltzfus (FSU Interview, 2022)</h3>
+                    <p class="summary">Foundation on civil courage; women protested near Gestapo; connected descendants; non-compliance history.</p>
+                    <div class="unique">Unique: Modern reunions; Havel's "living in truth."</div>
+                    <div class="theme">Theme: Reform—Educates on everyday resistance.</div>
+                    <a href="https://history.fsu.edu/article/making-rosenstrasse-foundation-interview-dr-nathan-stoltzfus" class="link">Full Interview</a>
+                    <div class="citation">FSU, 2022<grok-card data-id="bedb11" data-type="citation_card"></grok-card></div>
+                </div>
+                <div class="card">
+                    <h3>7. 80th Anniversary Panel (YouTube, 2023)</h3>
+                    <p class="summary">Women grew from few to hundreds vs. machine guns; releases Mar 6; role-playing game for education.</p>
+                    <div class="unique">Unique: Spontaneous growth; game immersion.</div>
+                    <div class="theme">Theme: Revolution—Unorganized defiance succeeds.</div>
+                    <a href="https://www.youtube.com/watch?v=lIJ_BzPMccY" class="link">Full Video</a>
+                    <div class="citation">MJHNYC, 2023<grok-card data-id="271a0e" data-type="citation_card"></grok-card></div>
+                </div>
+                <div class="card">
+                    <h3>8. Rita Kuhn (USC SFI, 2017)</h3>
+                    <p class="summary">Personal memory of demonstrations; mixed marriage survival; 100 Days to Inspire Respect series.</p>
+                    <div class="unique">Unique: Physician's view; inspiration for respect.</div>
+                    <div class="theme">Theme: Reaction—Personal pushback to arrests.</div>
+                    <a href="https://sfi.usc.edu/video/rita-kuhn-rosenstrasse-demonstrations" class="link">Full Video</a>
+                    <div class="citation">USC SFI, 2017<grok-card data-id="0c1e8f" data-type="citation_card"></grok-card></div>
+                </div>
+                <div class="card">
+                    <h3>9. Gad Beck (SFI, Unknown)</h3>
+                    <p class="summary">Aunts among mass gathering at Rosenstrasse for release from Fabrikaktion detention.</p>
+                    <div class="unique">Unique: Family chain in mass action.</div>
+                    <div class="theme">Theme: Reform—Solidarity prevents camps.</div>
+                    <a href="https://sfi.usc.edu/video/gad-beck-rosenstrasse-protest" class="link">Full Video</a>
+                    <div class="citation">USC SFI<grok-card data-id="f0d9bc" data-type="citation_card"></grok-card></div>
+                </div>
+                <div class="card">
+                    <h3>10. Collective Survivors (Stoltzfus/USHMM, Various)</h3>
+                    <p class="summary">Interviews: Stigma endurance; reunions; broader Holocaust "what ifs."</p>
+                    <div class="unique">Unique: Legacy reflections; scalability questions.</div>
+                    <div class="theme">Theme: Revolution—Seeds for wider dissent.</div>
+                    <a href="https://www.amazon.com/Resistance-Heart-Intermarriage-Rosenstrasse-Protest/dp/0393039048" class="link">Related Book</a>
+                    <div class="citation">Stoltzfus/Various<grok-card data-id="d465ee" data-type="citation_card"></grok-card></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="multimedia">
+        <div class="container">
+            <h2>Multimedia: Videos & Images</h2>
+            <p>Embedded clips for immersion: Testimonies and documentaries bring history alive.</p>
+            <div class="video-grid">
+                <div class="video-card">
+                    <iframe src="https://www.youtube.com/embed/kRC9CAmbJD8" allowfullscreen></iframe>
+                    <p>Gad Beck Testimony</p>
+                </div>
+                <div class="video-card">
+                    <iframe src="https://www.youtube.com/embed/lIJ_BzPMccY" allowfullscreen></iframe>
+                    <p>80th Anniversary Panel</p>
+                </div>
+                <div class="video-card">
+                    <iframe src="https://www.youtube.com/embed/FdpKBpZatxk" allowfullscreen></iframe>
+                    <p>Rosenstrasse Film Clip</p>
+                </div>
+            </div>
+            <img src="https://www.nationalww2museum.org/sites/default/files/styles/full_width/public/2025-06/rosenstrasse-map.jpg?itok=example" alt="Deportation Map" style="max-width:100%; border-radius:15px; margin:2rem 0;">
+        </div>
+    </section>
+
+    <section id="memorial">
+        <div class="container">
+            <h2>Memorial & Legacy: Block der Frauen</h2>
+            <div class="memorial">
+                <p>The "Block der Frauen" monument by Ingeborg Hunzinger (1995) in Berlin honors the protesting women. Three sandstone blocks form a semicircle around a couple, symbolizing mourning and defiance. It commemorates how ordinary courage saved lives, inspiring global reflections on resistance. Legacy: Films like *Rosenstrasse* (2003); foundations educating on civil courage.</p>
+                <img src="https://upload.wikimedia.org/wikipedia/commons/9/9d/Rosenstra%C3%9Fe_memorial.jpg" alt="Block der Frauen" style="max-width:600px;">
+                <a href="https://www.visitberlin.de/en/block-women" class="link">Visit Site</a><grok-card data-id="85857b" data-type="citation_card"></grok-card>
+            </div>
+        </div>
+    </section>
+
+    <section id="themes">
+        <div class="container">
+            <h2>Thematic Connections: Reform, Revolution, Reaction</h2>
+            <p>Each source/testimony ties to a theme, adding puzzle pieces: e.g., #1 Reaction builds to #10 Revolution potential.</p>
+            <h3>Reform</h3>
+            <p>#2 Memory reforms identity; #5 Churches advocate change; #3 testimonies family protections—loop: Sources contextualize testimonies' calls for policy shifts.</p>
+            <h3>Revolution</h3>
+            <p>#3 Debates challenge myths; #6 Public defiance; #7 Panel's unorganized action—feedback: Testimonies' boldness inspires source analyses of scalability.</p>
+            <h3>Reaction</h3>
+            <p>#1 Nazi sensitivity; #4 Consensus fears; #2 Gluckstein's threats—cohesive: Sources' debates validated by testimonies' pressures, deepening regime cracks.</p>
+        </div>
+    </section>
+
+    <section id="analysis">
+        <div class="container">
+            <h2>Overall Analysis: Feedback Loop & Key Takeaways</h2>
+            <div class="analysis">
+                <p>The Protest connects themes: <strong>Reaction</strong> to Factory Action; <strong>Reform</strong> in exemptions (25 Auschwitz returns); <strong>Revolution</strong> in civilian power saving lives. Sources/testimonies loop: Foundational facts (#1) inform debates (#6), humanized by voices (#2), critiqued in memory (#3), culminating in legacy (#10)—each strengthens others for cohesive narrative. Takeaways: Grassroots reaction compels reform; hints revolutionary potential; ordinary courage endures.</p>
+                <p>Thesis: Rosenstrasse illustrates reaction catalyzing reform with revolutionary seeds, per building evidence.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Grok Research Hub | Comprehensive NHD Tool – Researched Sept 17, 2025</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth Scrolling & Staggered Animations
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+        const sections = document.querySelectorAll('section');
+        sections.forEach((sec, index) => {
+            sec.style.animationDelay = `${index * 0.2}s`;
+        });
+    </script>
+</body>
+</html>

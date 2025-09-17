@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NHD Tracker - National History Day Tracker</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Open Sans', sans-serif;
+            line-height: 1.6;
+            color: #fff;
+            background: #000;
+            overflow-x: hidden;
+        }
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 900; /* Bolder font */
+        }
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.4; /* Slightly lower opacity for black theme */
+        }
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            transition: background 0.3s ease;
+        }
+        nav.scrolled {
+            background: rgba(0, 0, 0, 1);
+        }
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+        }
+        nav .logo {
+            height: 40px;
+        }
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 700; /* Bolded */
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+        nav a:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background-image: url('https://www.archives.gov/files/founding-docs/downloads/Declaration_Pg1of1_AC.jpg');
+            background-size: cover;
+            background-position: center;
+            color: #fff;
+            position: relative;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.7); /* Better visibility on image */
+        }
+        .hero h1 {
+            font-size: 4.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .hero p {
+            font-size: 1.8rem;
+            margin-bottom: 2.5rem;
+            opacity: 0.95;
+        }
+        .scroll-indicator {
+            position: absolute;
+            bottom: 20px;
+            animation: bounce 2s infinite;
+            color: #fff;
+            font-size: 2rem;
+        }
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-15px); }
+            60% { transform: translateY(-7px); }
+        }
+        section {
+            padding: 6rem 5%;
+            max-width: 1400px; /* Wider for more details */
+            margin: 0 auto;
+        }
+        .resources {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2.5rem;
+            position: relative;
+        }
+        .resource-card {
+            background: #1e1e1e;
+            border-radius: 25px;
+            padding: 2.5rem;
+            box-shadow: 0 15px 40px rgba(255,255,255,0.05);
+            transition: all 0.4s ease;
+            position: relative;
+            z-index: 10;
+        }
+        .resource-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 25px 50px rgba(255,255,255,0.1);
+        }
+        .resource-card h3 {
+            color: #fff;
+            margin-bottom: 1.2rem;
+            font-size: 1.5rem;
+        }
+        .resource-card p {
+            margin-bottom: 1.5rem;
+        }
+        .resource-card a {
+            color: #60a5fa;
+            text-decoration: none;
+            font-weight: 700;
+        }
+        .connections {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 5;
+        }
+        .connection-line {
+            position: absolute;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #fff, transparent);
+            opacity: 0.2;
+            transition: opacity 0.3s ease;
+        }
+        .connection-line:hover {
+            opacity: 0.5;
+        }
+        .video-embed {
+            width: 100%;
+            height: 350px;
+            border-radius: 20px;
+            border: none;
+        }
+        .accordion {
+            background: #1e1e1e;
+            border-radius: 20px;
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(255,255,255,0.05);
+        }
+        .accordion-header {
+            padding: 1.8rem;
+            background: #000;
+            color: #fff;
+            cursor: pointer;
+            font-weight: 700;
+            transition: background 0.3s ease;
+        }
+        .accordion-header:hover {
+            background: #111;
+        }
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+            padding: 0 1.8rem;
+        }
+        .accordion-content.open {
+            max-height: 600px;
+            padding: 1.8rem;
+        }
+        footer {
+            background: #000;
+            color: #fff;
+            text-align: center;
+            padding: 3rem;
+            margin-top: 6rem;
+            border-top: 1px solid #333;
+        }
+        @media (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+            }
+            .hero h1 {
+                font-size: 3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="particles-canvas"></canvas>
+    
+    <nav id="navbar">
+        <ul>
+            <li><svg class="logo" viewBox="0 0 200 50" xmlns="http://www.w3.org/2000/svg">
+                <text x="10" y="35" font-family="Playfair Display, serif" font-size="24" font-weight="900" fill="#fff">NHD</text>
+                <text x="60" y="35" font-family="Open Sans, sans-serif" font-size="18" font-weight="700" fill="#60a5fa">Tracker</text>
+            </svg></li>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#resources">Resources</a></li>
+            <li><a href="#tips">Tips</a></li>
+            <li><a href="#videos">Videos</a></li>
+            <li><a href="#past-winners">Past Winners</a></li>
+            <li><a href="#themebook">Theme Book</a></li>
+            <li><a href="#rules">Contest Rules</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li><a href="explain.html">Detailed(desc)</a></li>
+            <li><a href="noexplain.html">Bulk (no desc)</a></li>
+            <li><a href="start.html">Advanced Start</a></li>
+            <li><a href="easystart.html">Easy Start</a></li>
+           
+        </ul>
+    </nav>
+
+    <section id="home" class="hero">
+        <h1>Welcome to NHD Tracker</h1>
+        <p>Your Ultimate Guide to National History Day 2026: Revolution, Reaction, Reform in History</p>
+        <div class="scroll-indicator">↓ Scroll to Explore</div>
+    </section>
+
+    <section id="resources" class="resources">
+        <div class="connections" id="connections"></div>
+        <div class="resource-card">
+            <h3>Student Research Guide</h3>
+            <p>Detailed hints, tips, and interactive activities for conducting thorough historical inquiry and analysis tailored to the 2026 theme.</p>
+            <a href="https://nhd.org/en/resources/student-research-guide/" target="_blank">Visit Resource</a>
+        </div>
+        <div class="resource-card">
+            <h3>DocsTeach Primary Sources</h3>
+            <p>Curated primary sources from the National Archives aligned with the Revolution, Reaction, Reform theme, including documents, images, and activities.</p>
+            <a href="https://docsteach.org/topics/nhd/" target="_blank">Explore Now</a>
+        </div>
+        <div class="resource-card">
+            <h3>White House History Resources</h3>
+            <p>In-depth resources on presidential revolutions, reactions, and reforms, perfect for exploring White House history in the context of the 2026 theme.</p>
+            <a href="https://www.whitehousehistory.org/rubenstein-center/k-12-education-resources-and-programs/learning-tools-and-resources/national-history-day-resources" target="_blank">Learn More</a>
+        </div>
+        <div class="resource-card">
+            <h3>Library Research Guide</h3>
+            <p>Comprehensive contest details, online databases, and research strategies for success with the 2026 theme.</p>
+            <a href="https://www.prattlibrary.org/research/guides/national-history-day-research" target="_blank">Access Guide</a>
+        </div>
+        <div class="resource-card">
+            <h3>Government Resources</h3>
+            <p>Extensive links to government information and archives tailored for History Day projects on revolutions and reforms.</p>
+            <a href="https://godort.libguides.com/History-Day" target="_blank">Browse Resources</a>
+        </div>
+        <div class="resource-card">
+            <h3>NEH-Edsitement Guide</h3>
+            <p>Rich resources for the 2026 theme, project types, and educational tools from the National Endowment for the Humanities.</p>
+            <a href="https://edsitement.neh.gov/teachers-guides/preparing-national-history-day" target="_blank">Get Started</a>
+        </div>
+        <!-- Added more details with extra cards -->
+        <div class="resource-card">
+            <h3>Library of Congress Resources</h3>
+            <p>Access vast collections of primary sources, maps, and photographs for historical research on revolutions and reforms.</p>
+            <a href="https://www.loc.gov/classroom-materials/national-history-day/" target="_blank">Discover</a>
+        </div>
+        <div class="resource-card">
+            <h3>Smithsonian Learning Lab</h3>
+            <p>Interactive collections and tools for exploring history through artifacts and stories related to the 2026 theme.</p>
+            <a href="https://learninglab.si.edu/search?st=National+History+Day" target="_blank">Explore</a>
+        </div>
+        <div class="resource-card">
+            <h3>GovInfo NHD Resources</h3>
+            <p>Official government publications and primary sources to support research on Revolution, Reaction, Reform.</p>
+            <a href="https://www.govinfo.gov/features/nhd-2025-26" target="_blank">Access GovInfo</a>
+        </div>
+        <div class="resource-card">
+            <h3>Texas State Library Archives</h3>
+            <p>Curated topics and collections from Texas history connected to the 2026 NHD theme.</p>
+            <a href="https://www.tsl.texas.gov/arc/nationalhistoryday" target="_blank">Explore Texas Resources</a>
+        </div>
+    </section>
+
+    <section id="tips">
+        <h2>Tips for Success in Revolution, Reaction, Reform</h2>
+        <div class="accordion">
+            <div class="accordion-header" onclick="toggleAccordion(this)">Conducting Oral History Interviews</div>
+            <div class="accordion-content">
+                <p>Comprehensive guidance on when to use interviews to capture personal reactions to historical revolutions or reforms, including preparation steps, ethical considerations, and integration into your NHD project.</p>
+            </div>
+        </div>
+        <div class="accordion">
+            <div class="accordion-header" onclick="toggleAccordion(this)">Include Multiple Perspectives</div>
+            <div class="accordion-content">
+                <p>Understand why diverse viewpoints—such as those of revolutionaries, reactors, and reformers—strengthen your argument, with examples from the 2026 theme and research strategies.</p>
+            </div>
+        </div>
+        <div class="accordion">
+            <div class="accordion-header" onclick="toggleAccordion(this)">Selecting Topics</div>
+            <div class="accordion-content">
+                <p>Step-by-step tips on choosing a compelling topic like the American Revolution or Progressive Era reforms that fits the theme, aligns with your interests, and has ample sources.</p>
+            </div>
+        </div>
+        <!-- Added more details -->
+        <div class="accordion">
+            <div class="accordion-header" onclick="toggleAccordion(this)">Annotated Bibliography Tips</div>
+            <div class="accordion-content">
+                <p>How to create a strong annotated bibliography for sources on revolutions and reactions, including what to include in annotations and common pitfalls to avoid.</p>
+            </div>
+        </div>
+        <div class="accordion">
+            <div class="accordion-header" onclick="toggleAccordion(this)">Project Presentation Skills</div>
+            <div class="accordion-content">
+                <p>Advice on delivering performances about historical reforms, designing exhibits on reactions, and presenting your work confidently to judges for the 2026 contest.</p>
+            </div>
+        </div>
+        <div class="accordion">
+            <div class="accordion-header" onclick="toggleAccordion(this)">Theme Connection Strategies</div>
+            <div class="accordion-content">
+                <p>Detailed methods to clearly link your topic to Revolution, Reaction, or Reform, with examples from the theme book and how to address the 250th anniversary of the Declaration of Independence.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="videos">
+        <h2>Helpful Videos for 2026 Theme</h2>
+        <iframe class="video-embed" src="https://www.youtube.com/embed/f0UKT2ln1fo" title="2026 National History Day Theme Video: Revolution, Reaction, Reform in History" allowfullscreen></iframe>
+        <iframe class="video-embed" src="https://www.youtube.com/embed/kkWFxNDClzg" title="2026 Minnesota History Day Theme Overview" allowfullscreen></iframe>
+        <iframe class="video-embed" src="https://www.youtube.com/embed/ZrSZSutPfH8" title="NHD Quick Tip: Why Include Multiple Perspectives?" allowfullscreen></iframe>
+        <iframe class="video-embed" src="https://www.youtube.com/embed/8EQzbmLGz3c" title="NHD Quick Tip: What NOT to do in your NHD performance" allowfullscreen></iframe>
+        <iframe class="video-embed" src="https://www.youtube.com/embed/zcM6xbl5-sQ" title="National History Day: How to Create an Exhibit" allowfullscreen></iframe>
+        <iframe class="video-embed" src="https://www.youtube.com/embed/k-R-vbVvSHA" title="Discover the 2026 National History Day Theme! 🎥📚" allowfullscreen></iframe>
+    </section>
+
+    <section id="past-winners">
+        <h2>Past Winning Documentaries (2012 Theme: Revolution, Reaction, Reform)</h2>
+        <p>Explore inspiring documentaries from the last time this theme was featured in 2012. These national gold medal winners showcase exceptional storytelling and research.</p>
+        <iframe class="video-embed" src="https://www.youtube.com/embed/c6Ids_RK6XM" title="The Green Revolution: Against All Odds (Senior Group Gold, 2012)" allowfullscreen></iframe>
+        <iframe class="video-embed" src="https://www.youtube.com/embed/f-a2Vjb2xng" title="Counting the Dead (Junior Individual Gold, 2012)" allowfullscreen></iframe>
+    </section>
+
+    <section id="themebook">
+        <h2>2026 Theme Book Summary: Revolution, Reaction, Reform in History</h2>
+        <p>This theme explores the dynamic forces of revolutions as transformative changes, reactions as responses to those upheavals, and reforms as deliberate efforts to improve or adjust systems. Coinciding with the 250th anniversary of the Declaration of Independence, it encourages examination of how these elements have shaped history—from political revolutions like the American Revolution to social reforms in the Progressive Era and reactions to the Industrial Revolution. Students are not required to cover all three aspects but should connect their topic meaningfully to at least one, considering questions like "What sparks a revolution?" "How do reactions influence reform?" and "What sustains lasting change?"</p>
+        <div class="accordion">
+            <div class="accordion-header" onclick="toggleAccordion(this)">Introduction and Narrative</div>
+            <div class="accordion-content">
+                <p>The narrative delves into the blurred lines between revolutions, reactions, and reforms, often where one leads to another. Revolutions can be sudden or gradual, political or cultural; reactions range from resistance to adaptation; reforms aim for equity and progress. Key examples include the American Revolution's revolutionary ideals leading to constitutional reforms, reactions to industrialization sparking labor reforms, and global decolonization movements.</p>
+            </div>
+        </div>
+        <div class="accordion">
+            <div class="accordion-header" onclick="toggleAccordion(this)">Special Articles</div>
+            <div class="accordion-content">
+                <p>Features in-depth articles on pivotal events, such as women's suffrage as a reform reaction to exclusion, technological revolutions and societal pushback, environmental reforms responding to industrial reactions, labor rights movements, decolonization processes, and the cycle of revolution-reform in modern democracies, with ties to the Declaration's enduring impact.</p>
+            </div>
+        </div>
+        <div class="accordion">
+            <div class="accordion-header" onclick="toggleAccordion(this)">Topic Examples</div>
+            <div class="accordion-content">
+                <p>Local: Community reactions to urban renewal reforms. National: Civil War as revolution, Reconstruction reforms, Progressive Era changes. World: French Revolution and Napoleonic reactions, Gandhi's nonviolent reforms against colonial rule, Russian Revolution outcomes. Emphasis on the interplay of these forces and their historical significance.</p>
+            </div>
+        </div>
+        <div class="accordion">
+            <div class="accordion-header" onclick="toggleAccordion(this)">Brainstorm and Resources</div>
+            <div class="accordion-content">
+                <p>Includes a theme brainstorm sheet for generating ideas, topic lists from affiliates like Minnesota and California, and connections to the semiquincentennial celebrations for the nation's 250th birthday.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="rules">
+        <h2>Contest Rules Summary</h2>
+        <div class="accordion">
+            <div class="accordion-header" onclick="toggleAccordion(this)">General Rules</div>
+            <div class="accordion-content">
+                <p>Designed to ensure a fair competition. Divisions: Junior (grades 6-8), Senior (grades 9-12). Categories include Exhibit, Documentary, Paper, Performance, Website. Entries can be individual or group (2-5 students). All projects must relate to the 2026 theme of Revolution, Reaction, Reform in History.</p>
+            </div>
+        </div>
+        <div class="accordion">
+            <div class="accordion-header" onclick="toggleAccordion(this)">Process Paper</div>
+            <div class="accordion-content">
+                <p>A 500-word description of your research process, how the topic developed, and its connection to the Revolution, Reaction, Reform theme. Required for all categories except historical papers.</p>
+            </div>
+        </div>
+        <div class="accordion">
+            <div class="accordion-header" onclick="toggleAccordion(this)">Evaluation</div>
+            <div class="accordion-content">
+                <p>Judges evaluate based on historical quality (60%), relation to theme (20%), clarity of presentation (20%). No content censorship, but strict adherence to rules is mandatory, with emphasis on theme connection.</p>
+            </div>
+        </div>
+        <div class="accordion">
+            <div class="accordion-header" onclick="toggleAccordion(this)">Contests</div>
+            <div class="accordion-content">
+                <p>Progress from school-level to regional/affiliate contests, then nationals in June 2026 at the University of Maryland. Revise projects between levels based on judge feedback for improvement.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contact">
+        <p>&copy; 2026 NHD Tracker. All rights reserved. | Contact: info@nhdtracker.com | <a href="#home" style="color: #60a5fa;">Back to Top</a></p>
+    </footer>
+
+    <script>
+        // Particles JS - White particles reverted to normal
+        const canvas = document.getElementById('particles-canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        let particles = [];
+        const numParticles = 150; // More particles for more details
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 4 + 1;
+                this.speedX = Math.random() * 1.2 - 0.6;
+                this.speedY = Math.random() * 1.2 - 0.6;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.x > canvas.width || this.x < 0) this.speedX = -this.speedX;
+                if (this.y > canvas.height || this.y < 0) this.speedY = -this.speedY;
+            }
+            draw() {
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        for (let i = 0; i < numParticles; i++) {
+            particles.push(new Particle());
+        }
+
+        function connectParticles() {
+            for (let a = 0; a < particles.length; a++) {
+                for (let b = a; b < particles.length; b++) {
+                    let dx = particles[a].x - particles[b].x;
+                    let dy = particles[a].y - particles[b].y;
+                    let distance = Math.sqrt(dx * dx + dy * dy);
+                    if (distance < 120) { // Wider connections
+                        ctx.strokeStyle = `rgba(255, 255, 255, ${1 - distance / 120})`;
+                        ctx.lineWidth = 1.5;
+                        ctx.beginPath();
+                        ctx.moveTo(particles[a].x, particles[a].y);
+                        ctx.lineTo(particles[b].x, particles[b].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => { p.update(); p.draw(); });
+            connectParticles();
+            requestAnimationFrame(animate);
+        }
+        animate();
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        // Nav scroll effect
+        window.addEventListener('scroll', () => {
+            document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
+        });
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+
+        // Accordion
+        function toggleAccordion(header) {
+            const content = header.nextElementSibling;
+            content.classList.toggle('open');
+        }
+
+        // Connections for resources - More detailed connections
+        const cards = document.querySelectorAll('.resource-card');
+        const connections = document.getElementById('connections');
+        function updateConnections() {
+            connections.innerHTML = '';
+            cards.forEach((card, index) => {
+                if (index < cards.length - 1) {
+                    const line = document.createElement('div');
+                    line.className = 'connection-line';
+                    const rect1 = cards[index].getBoundingClientRect();
+                    const rect2 = cards[index + 1].getBoundingClientRect();
+                    const containerRect = connections.getBoundingClientRect();
+                    const x1 = rect1.left + rect1.width / 2 - containerRect.left;
+                    const y1 = rect1.top + rect1.height / 2 - containerRect.top;
+                    const x2 = rect2.left + rect2.width / 2 - containerRect.left;
+                    const y2 = rect2.top + rect2.height / 2 - containerRect.top;
+                    const dist = Math.hypot(x2 - x1, y2 - y1);
+                    const angle = Math.atan2(y2 - y1, x2 - x1);
+                    line.style.width = `${dist}px`;
+                    line.style.left = `${x1}px`;
+                    line.style.top = `${y1}px`;
+                    line.style.transform = `rotate(${angle}rad)`;
+                    connections.appendChild(line);
+                }
+            });
+        }
+        updateConnections();
+        window.addEventListener('resize', updateConnections);
+        window.addEventListener('scroll', updateConnections);
+    </script>
+</body>
+</html>
